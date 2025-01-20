@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+@layer utilities {
+.section {
+  @apply container font-roboto mx-auto min-h-screen px-3 py-3 flex flex-col  gap-3
+}
+.heading{
+  @apply text-3xl text-left font-semibold text-transparent text-clip bg-gradient-to-tr inline-block bg-clip-text from-blue-600 via-purple-600 to-green-600
+}
+.gradient-text {
+  @apply  bg-clip-text font-sans bg-gradient-to-r from-[#6610f2] via-cyan-500 to-teal-600
+}
+.input {
+  @apply py-1 px-2 outline-none border border-gray-600 w-full rounded
+
+}
+.label-style {
+  @apply block tracking-wider !text-base  font-semibold mb-2
+}
+}
+.card-hover:hover{
+  /* border-top-right-radius: 25%; */
+  border-radius: none;
+  border-top-left-radius: 50%;
+  transition: 300ms ease-in border-radius;
+}
+a:active {
+  background-color:  blueviolet !important;
+}
+.grid-colums {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+
+}
+.hover-effect::before {
+  content: '';
+  width: 100%;
+  height: 100%;
+  background: #000;
+  position: absolute; 
+  inset: 0;
+  z-index: 10;
+}
+@layer base {
+  :root {
+    --radius: 0.5rem;
+  }
+}
+
