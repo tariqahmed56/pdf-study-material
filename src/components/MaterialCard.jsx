@@ -1,5 +1,6 @@
 import React from "react";
 import DownloadButton from "./DownloadButton";
+import { formatSupabaseDate } from "@/hooks/formatDateFromSupabase";
 
 const MaterialCard = ({ data }) => {
   return (
@@ -20,9 +21,9 @@ const MaterialCard = ({ data }) => {
             <span className="font-semibold">Chapter Name:</span> {data.chapter_name}
           </p>
         )}
-        <p className="text-sm text-gray-400 mt-3">
-          <span className="font-semibold">Uploaded At:</span>{" "}
-          {new Date(data.created_at).toLocaleDateString()}
+        <p className="text-sm text-gray-400 mt-3 ">
+          <span className="font-semibold heading !text-base">Uploaded At:</span>{" "}
+          <span>{formatSupabaseDate(data.created_at)}</span>
         </p>
         <div className="mt-4">
           {data.downloadUrl ? (

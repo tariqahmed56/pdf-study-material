@@ -7,13 +7,11 @@ const Admin =  () => {
   const { user, setUser,loading } = useUser();
   const router = useRouter()
 
-  useEffect(() => {
-    console.log(user);
-   
+  useEffect(() => {   
     if (!loading && user === undefined) {
       router.push('/');
     }
-
+    console.log(user)
   }, [user,router]);
 
    return (

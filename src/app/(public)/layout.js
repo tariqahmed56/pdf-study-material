@@ -17,8 +17,8 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: 'Study Hub',
-  description: 'Study Hub Past Papers , Practice Questions for MDCAT, ECAT , SAT',
+  title: 'Imtehan Gah',
+  description: 'ImtehanGah is platform which provides Past Papers , Practice Questions for MDCAT, ECAT , SAT.',
 }
 
 export default function RootLayout({ children }) {

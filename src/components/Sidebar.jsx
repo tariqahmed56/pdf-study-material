@@ -9,7 +9,8 @@ import {
   X,
   LogIn,
   LogOut,
-  LayoutDashboard
+  LayoutDashboard,
+  Bookmark
 } from "lucide-react";
 import Link from "next/link";
 import { supabase } from "@/app/lib/supabaseClient";
@@ -22,7 +23,7 @@ export default function Sidebar() {
     { icon: Book, label: "Practice Question", path: "/practice-questions" },
     { icon: FileText, label: "Past Papers", path: "/past-papers" },
     { icon: Info, label: "Exam Info", path: "/exam-info" },
-    { icon: Star, label: "Favorites", path: "/favorite" },
+    { icon: Bookmark, label: "Favorites", path: "/favorite" },
     { icon: LogIn, label: "Sign In/Register", path: "/login" },
   ];
 
@@ -49,7 +50,7 @@ export default function Sidebar() {
             </Link>
           ))}
           {
-            user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL &&
+            user?.id === process.env.NEXT_PUBLIC_ADMIN_UID  ||  user?.id === process.env.NEXT_PUBLIC_DEV_UID &&
             <Link
               href={"/admin"}
               className={`w-full items-center  flex space-x-3 px-4 py-3 mb-3 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition-colors`}

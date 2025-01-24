@@ -2,6 +2,7 @@ import { Download, Star } from "lucide-react";
 import { SAMPLE_MATERIALS } from "@/constants";
 import WhatWeOffer from "@/components/WhatWeOffer";
 import LatestCards from "@/components/LatestCards";
+import Link from "next/link";
 
 const Home = () => {
   return (
@@ -17,12 +18,12 @@ const Home = () => {
             Access notes, past papers, and resources tailored to help you excel
             in your exams.
           </p>
-          <a
-            href="/get-started"
+          <Link
+            href="/past-papers"
             className="inline-block z-50 px-6 py-3 bg-blue-600 text-white text-lg font-medium rounded-full shadow-md hover:bg-blue-700 transition"
           >
-            Browse PDF
-          </a>
+            Browse Past papers
+          </Link>
         </div>
       </div>
       <WhatWeOffer/>

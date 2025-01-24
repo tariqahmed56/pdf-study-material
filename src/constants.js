@@ -80,6 +80,6 @@ export const dummyArray = [
       class: ["Grade 12"]
     }
   ];
-  export const Grades = ["Grade 9", "Grade 10", "Grade 11", "Grade 12"];
-  export const Exams = ["MDCAT", "ECAT", "USAT"];
+  export const Grades = ["Grade 11", "Grade 12"];
+  export const Exams = ["MDCAT", "ECAT", "SAT"];
     

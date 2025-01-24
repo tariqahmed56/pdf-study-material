@@ -3,18 +3,15 @@ import { supabase } from "@/app/lib/supabaseClient";
 import { Download } from "lucide-react";
 import React, { useActionState, useRef, useState } from "react";
 import { FaAd, FaPlusCircle } from "react-icons/fa";
-import { Flip, toast, Zoom } from "react-toastify";
+import { Bounce, Flip, toast, Zoom } from "react-toastify";
 
 function Form() {
-  // const [classes, setClasses] = useState([""]);
   const [formData, setFormData] = useState({});
-  const [file, setFile] = useState(null)
-  const [message, setMessage] = useState("");
+  const [file, setFile] = useState(null);
   const [loading, setLoading] = useState({
     fileUploading: false,
     DataUploading: false
-  })
-
+  });
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
@@ -30,23 +27,22 @@ function Form() {
         progress: undefined,
         theme: "light",
         transition: Flip,
-      })
+      });
       return;
     }
     const uniqueName = Date.now();
     try {
       setLoading(prev => ({ ...prev, fileUploading: true }));
-      const FileUrl = `https://nxqineudxlnblzqvxbgh.supabase.co/storage/v1/object/public/PDFS/${uniqueName}`
-       const { data, error } = await supabase.storage.from("PDFS").upload(`${uniqueName}`, file, {
-          contentType: "application/pdf",
+      const FileUrl = `https://nxqineudxlnblzqvxbgh.supabase.co/storage/v1/object/public/PDFS/${uniqueName}`;
+      const { data, error } = await supabase.storage.from("PDFS").upload(`${uniqueName}`, file, {
+        contentType: "application/pdf",
       });
-      console.log(error)
+      // console.log(error);
       setFormData(prev => (
         {
-          ...prev,
           downloadUrl: FileUrl
         }
-      ))
+      ));
       setLoading(prev => ({ ...prev, fileUploading: false }));
     } catch (error) {
       toast.error("Something went wrong , try again.", {
@@ -59,17 +55,13 @@ function Form() {
         progress: undefined,
         theme: "light",
         transition: Flip,
-      })
-      console.error(error)
+      });
+      console.error(error);
     }
-
-
   };
 
-
   async function handleSubmit(event) {
-    event.preventDefault()
-      setMessage({})
+    event.preventDefault();
     if (!file) {
       toast.error("Pdf kon upload kar sy , Kaara ", {
         position: "top-right",
@@ -81,31 +73,33 @@ function Form() {
         progress: undefined,
         theme: "light",
         transition: Zoom,
-      })
+      });
       return;
     }
     const form = event.target;
     const formData1 = new FormData(form);
 
-    const formObject = Object.fromEntries(formData1);
-    const newFormData = { ...formObject, classes: formData1.getAll("classes") };
+    const formObject = await Object.fromEntries(formData1);
+    const newFormData = { downloadUrl : formData.downloadUrl  , ...formObject, classes: formData1.getAll("classes") };
     setFormData((prev) => ({ ...prev, ...newFormData }));
     try {
-      setLoading(prev => ({ ...prev, DataUploading: true }))
-      const { data, error } = await supabase.from('PDF').insert(formData).single();
+      setLoading(prev => ({ ...prev, DataUploading: true }));
+      const { data, error } = await supabase.from('PDF').insert(newFormData).single();
       setLoading(prev => ({ ...prev, DataUploading: false }));
       if (!error) {
-
-        setMessage({
-          type: "success",
-          message: "Upload thy gayo . (successfull)."
-        });
+          toast.success("Upload thy gayo . successfull" , {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+          });
       } else {
-        console.log(error)
-        setMessage({
-          type: "error",
-          message: "kujh maslo thay gayo, try again"
-        })
+       
         toast.error("kujh maslo thay gayo, try again. ", {
           position: "top-right",
           autoClose: 3000,
@@ -116,11 +110,10 @@ function Form() {
           progress: undefined,
           theme: "light",
           transition: Zoom,
-        })
+        });
       }
-
     } catch (error) {
-       console.error(error);
+      console.error(error);
     }
   }
 
@@ -129,11 +122,11 @@ function Form() {
       onSubmit={handleSubmit}
       className="max-w-3xl mx-auto w-full px-6 py-8 bg-white shadow-md rounded-xl space-y-6"
     >
-      <h1 className='heading px-0 !text-2xl !text-center w-full'>Add New Material </h1>
+      <h1 className='heading px-0 !text-2xl !text-center w-full mb-6'>Add New Material</h1>
 
       {/* Title Field */}
       <div>
-        <label htmlFor="title" className="label-style ">
+        <label htmlFor="title" className="label-style block text-lg font-medium text-gray-700 mb-2">
           Title
         </label>
         <input
@@ -148,28 +141,29 @@ function Form() {
 
       {/* Subject Field */}
       <div>
-        <label htmlFor="subject" className="label-style ">
+        <label htmlFor="subject" className="label-style block text-lg font-medium text-gray-700 mb-2">
           Subject
         </label>
         <input
           type="text"
           id="subject"
           name="subject"
-          placeholder="Enter the subject"
+          placeholder="Be careful about spelling. it will be used for filtering"
           required
           className="block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
         />
       </div>
 
+      {/* Material Type Field */}
       <div>
-        <label htmlFor="material_type" className="label-style ">
+        <label htmlFor="material_type" className="label-style block text-lg font-medium text-gray-700 mb-2">
           Material Type
         </label>
         <select
           required
           onChange={(e) => {
             setFormData((prevData) => ({ ...prevData, material_type: e.target.value }));
-            console.log(formData)
+            console.log(formData);
           }}
           id="material_type"
           name="material_type"
@@ -185,26 +179,29 @@ function Form() {
           ))}
         </select>
       </div>
-      {/* Chapter */}
-      {formData?.material_type === "practice-questions" && <div>
-        <label htmlFor="subject" className="label-style ">
-          Chapter Name
-        </label>
-        <input
-          type="text"
-          id="subject"
-          name="chapter_name"
-          placeholder="Chapter jo Naaalo"
-          required
-          className="block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-        />
-      </div>}
-      {/* Class Fields */}
 
+      {/* Chapter Field */}
+      {formData?.material_type === "practice-questions" && (
+        <div>
+          <label htmlFor="chapter_name" className="label-style block text-lg font-medium text-gray-700 mb-2">
+            Chapter Name
+          </label>
+          <input
+            type="text"
+            id="chapter_name"
+            name="chapter_name"
+            placeholder="Chapter jo Naaalo"
+            required
+            className="block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+          />
+        </div>
+      )}
+
+      {/* Class Fields */}
       <div>
-        <label className="label-style ">Classes</label>
+        <label className="label-style block text-lg font-medium text-gray-700 mb-2">Classes</label>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          {["Grade 9", "Grade 10", "Grade 11", "Grade 12", "MDCAT", "ECAT", "USAT"].map((classValue, index) => (
+          {["Grade 11", "Grade 12", "MDCAT", "ECAT", "SAT"].map((classValue, index) => (
             <fieldset required name="classes" key={index} className="flex items-center space-x-2">
               <input
                 type="checkbox"
@@ -218,11 +215,9 @@ function Form() {
         </div>
       </div>
 
-
-
       {/* File Upload */}
       <div>
-        <label className="label-style ">Upload PDF</label>
+        <label className="label-style block text-lg font-medium text-gray-700 mb-2">Upload PDF</label>
         <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6 bg-gray-50 hover:bg-gray-100">
           <input
             type="file"
@@ -253,21 +248,18 @@ function Form() {
               : "bg-indigo-600 hover:bg-indigo-700"
             }`}
         >
-          {loading.DataUploading ? "Loading..." : "Submit"}
+          {loading.DataUploading ? (
+            <span className="flex items-center justify-center">
+              <svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+              </svg>
+              Uploading...
+            </span>
+          ) : "Submit"}
         </button>
       </div>
-
-      {/* Success/Error Message */}
-      {message.message && (
-        <p
-          className={`text-center mt-4 font-medium ${message.type === "success" ? "text-green-600" : "text-red-600"
-            }`}
-        >
-          {message.message}
-        </p>
-      )}
     </form>
-
   );
 }
 

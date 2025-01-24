@@ -23,8 +23,8 @@ body {
   @apply block tracking-wider !text-base  font-semibold mb-2
 }
 }
+
 .card-hover:hover{
-  /* border-top-right-radius: 25%; */
   border-radius: none;
   border-top-left-radius: 50%;
   transition: 300ms ease-in border-radius;
@@ -32,7 +32,7 @@ body {
 a:active {
   background-color:  blueviolet !important;
 }
-.grid-colums {
+.grid-columns {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 
 }
@@ -45,6 +45,103 @@ a:active {
   inset: 0;
   z-index: 10;
 }
+
+/* Editor Styles */
+.editor-content {
+  width: 100%;
+  border: 1px solid #ccc;
+  padding: 16px 24px;
+  min-height: 200px;
+  border-radius: 8px;
+  outline: none;
+  position: relative;
+
+}
+
+.toolbar button {
+  padding: 8px;
+  border: none;
+  background: #f0f0f0;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+
+.toolbar button:hover {
+  background: #e0e0e0;
+}
+
+.toolbar button:disabled {
+  background: #d0d0d0;
+  cursor: not-allowed;
+}
+
+.toolbar button.active {
+  background: #007bff;
+  color: white;
+}
+
+/* Custom styles for headings and lists */
+.editor-content h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  line-height: 20px;
+  /* margin: 0.67em 0; */
+}
+
+.editor-content h2 {
+  font-size: 1.5rem;
+  font-weight:600;
+  margin: 0.75em 0;
+}
+
+.editor-content ol {
+  list-style-type: decimal;
+  margin: 1em 0;
+  padding-left: 40px;
+}
+
+.editor-content ul {
+  list-style-type: disc;
+  margin: 1em 0;
+  padding-left: 40px;
+}
+
+.editor-content blockquote {
+  border-left: 4px solid rgba(76, 0, 130, 0.416);
+  background-color: rgba(137, 43, 226, 0.23);
+  padding-left: 16px;
+  padding-block: 1rem;
+  font-style: italic;
+  color: #000;
+  position: relative;
+  margin: 1rem 0;
+}
+.editor-content blockquote::before{
+  content: open-quote;
+  font-size: 2rem;
+  color: #000;
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+}
+.editor-content blockquote::after
+{
+  content: close-quote;
+  font-size: 2rem;
+  color: #000;
+  position: absolute;
+  bottom: -0.5rem;
+  right: 1rem;
+}
+.editor-content a {
+  color: blue;
+  text-decoration-line: underline;
+  font-size: 14px;
+  font-style: italic;
+  cursor: pointer;
+}
+
 @layer base {
   :root {
     --radius: 0.5rem;
