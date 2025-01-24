@@ -29,11 +29,13 @@ const Tiptap = ({content , setContent}) => {
      Link,
      Image
     ],
-    content: localStorage.getItem('content') || content,
+    content: content,
      placeholder: "Start typing...",
      onUpdate: ({ editor }) =>{
       setContent(editor.getHTML());
-       localStorage.setItem('content', editor.getHTML());
+      if(typeof window !== 'undefined'){
+        localStorage.setItem('content', editor.getHTML());
+      }
      }
   });
 
