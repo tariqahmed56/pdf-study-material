@@ -1,8 +1,11 @@
 "use client"
+import { useUser } from '@/hooks/useUser';
 import React from 'react';
 import { toast } from 'react-toastify';
 
 const DownloadButton = () => {
+  const {user} = useUser();
+  console.log(user)
   const handleDownload = async () => {
     try {
       const downloadUrl = 'https://nxqineudxlnblzqvxbgh.supabase.co/storage/v1/object/public/PDFS/1737314746062';

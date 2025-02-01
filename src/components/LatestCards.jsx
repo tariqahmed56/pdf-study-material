@@ -1,16 +1,25 @@
+"use client"
 import DownloadButton from "./DownloadButton";
 import { supabase } from "@/app/lib/supabaseClient";
 import BookMark from "./BookMark";
+import { useEffect, useState } from "react";
+// import error from "@/app/(public)/error";
 
-export const revalidate = 60;
-const LatestCards = async () => {
+const LatestCards = () => {
   // const {user} = useUser();
-  const { data, error } = await supabase
-    .from('PDF') 
-    .select('*') 
-    .order('created_at', { ascending: false })
-    .limit(3);
-    console.log(data);
+  const [data,setData] = useState([])
+  const dfd = async()=>{
+    const { data, error } = await supabase
+      .from('PDF') 
+      .select('*') 
+      .order('created_at', { ascending: false })
+      .limit(3);
+      setData(data)
+      console.log(data,error)
+      }
+  useEffect(()=>{
+    dfd()
+  },[])
   return (
     <section className="bg-gray-50 py-12">
       <div className="container mx-auto px-4">

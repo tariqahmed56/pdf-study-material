@@ -28,7 +28,6 @@ const page = async ({ searchParams }) => {
   //   }
   // }
 
-
   return (
       <section className="section text-2xl !flex-col gap-0">
         <Filters

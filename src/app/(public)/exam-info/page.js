@@ -1,10 +1,14 @@
+import { fetchMaterials } from "@/app/lib/fetchMaterial";
 import { supabase } from "@/app/lib/supabaseClient";
 import { formatSupabaseDate } from "@/hooks/formatDateFromSupabase";
 import Link from "next/link";
 
 const ExamInfo = async() => {
    const { data , error } = await supabase.from("EXAM_INFO").select("*");  
+   const d = await fetchMaterials("past-papers");
+   console.log(d)
      if(error){
+      console.error(error)
       throw new Error("Something went wrong. check your internet and try again by refreshing the page.");
      }
   return (

@@ -18,6 +18,7 @@ import { useUser } from "@/hooks/useUser";
 export default function Sidebar() {
   const { user, loading , setUser } = useUser();
   const [isOpen, setIsOpen] = useState(false);
+  const IsAdmin = user?.id === process.env.NEXT_PUBLIC_ADMIN_UID || user?.id === process.env.NEXT_PUBLIC_DEV_UID
 
   const menuItems = [
     { icon: Book, label: "Practice Question", path: "/practice-questions" },
@@ -50,7 +51,7 @@ export default function Sidebar() {
             </Link>
           ))}
           {
-            user?.id === process.env.NEXT_PUBLIC_ADMIN_UID  ||  user?.id === process.env.NEXT_PUBLIC_DEV_UID &&
+           IsAdmin &&
             <Link
               href={"/admin"}
               className={`w-full items-center  flex space-x-3 px-4 py-3 mb-3 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition-colors`}

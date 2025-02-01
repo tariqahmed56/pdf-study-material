@@ -3,7 +3,7 @@ import { supabase } from '@/app/lib/supabaseClient';
 import { useEffect, useState } from 'react';
 
 export const useUser = () => {
-  const [user, setUser] = useState(undefined);
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -13,14 +13,13 @@ export const useUser = () => {
       setLoading(false);
     }
     ap()
-    console.log(user)
 
     const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
       setLoading(false);
     });
 
-    // return () => listener?.unsubscribe() || ;
+    // return () => listener?.unsubscribe() 
   }, []);
 
   return { user, loading , setUser };

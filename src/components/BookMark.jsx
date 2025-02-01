@@ -7,13 +7,13 @@ import React from 'react'
 const BookMark = ({pdfId}) => {
     const {user} = useUser();
     const handleBookMark = async (pdfId,userId) => {
-        // console.log(pdfId,userId)
         const {data , error} = await supabase.from('book_marks').insert([
             {
                 pdf_id: pdfId ,
-                user_id : user.id
+                user_id : user.id,
             }
         ])
+        console.log(user.id)
         console.log(pdfId,error)
       }
   return (

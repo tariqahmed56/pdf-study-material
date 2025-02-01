@@ -1,3 +1,4 @@
+"use client"
 import { Download, Star } from "lucide-react";
 import { SAMPLE_MATERIALS } from "@/constants";
 import WhatWeOffer from "@/components/WhatWeOffer";
